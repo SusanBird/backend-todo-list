@@ -43,6 +43,7 @@ describe('users', () => {
     const res = await request(app)
       .post('/api/v1/users/sessions')
       .send({ email, password });
+    // eslint-disable-next-line no-console
     console.log(res.body);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ message: 'Signed in successfully!' });
@@ -64,6 +65,8 @@ describe('users', () => {
     expect(resp.status).toBe(204);
   });
 
-afterAll(() => {
-  pool.end();
-})});
+  afterAll(() => {
+    pool.end();
+  });
+});
+
