@@ -1,7 +1,7 @@
 -- Use this file to define your SQL tables
 -- The SQL in this file will be executed when you run `npm run setup-db`
-DROP TABLE IF EXISTS todousers;
 DROP TABLE IF EXISTS todos;
+DROP TABLE IF EXISTS todousers;
 
 CREATE TABLE todousers (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -11,6 +11,8 @@ CREATE TABLE todousers (
 
 CREATE TABLE todos (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  user_id BIGINT,
   todo VARCHAR NOT NULL,
-  complete BOOLEAN 
+  complete BOOLEAN, 
+  FOREIGN KEY (user_id) REFERENCES todousers(id)
 );
