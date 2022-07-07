@@ -40,11 +40,6 @@ describe('todos', () => {
     expect(resp.status).toBe(200);
   });
 
-  //   it('GET /api/v1/todos should return a 401 if not authenticated', async () => {
-  //     const resp = await request(app).get('/api/v1/todos');
-  //     expect(resp.status).toEqual(401);
-  //   });
-
   it('UPDATE /api/v1/todos/:id should update a todo', async () => {
     const [agent, user] = await registerAndLogin();
     const todo = await Todo.insert({
@@ -57,5 +52,28 @@ describe('todos', () => {
       .send({ complete: true });
     // expect(resp.status).toBe(200);
     expect(resp.body).toEqual({ ...todo, complete: true });
+  });
+
+  it('GET /api/v1/todos returns all todos associated with the authenticated User', async () => {
+    const [agent, user] = await registerAndLogin();
+    const user2 = await UserService.create(mockUser2);
+    const user1Todo = await Todo.insert({
+      todo: 'wash car',
+      complete: true,
+      user_id: user.id,
+    });
+    await Todo.insert({
+      todo: 'dishes',
+      complete: false,
+      user_id: user2.id,
+    });
+    const resp = await agent.get('/api/v1/todos');
+    expect(resp.status).toEqual(200);
+    expect(resp.body).toEqual([user1Todo]);
+  });
+
+  it('GET /api/v1/todos should return a 401 if not authenticated', async () => {
+    const resp = await request(app).get('/api/v1/todos');
+    expect(resp.status).toEqual(401);
   });
 });
