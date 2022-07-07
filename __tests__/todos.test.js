@@ -77,17 +77,17 @@ describe('todos', () => {
     expect(resp.status).toEqual(401);
   });
 
-  it('DELETE /api/v1/items/:id should delete items for valid user', async () => {
+  it('DELETE /api/v1/items/:id should delete todos for valid user', async () => {
     const [agent, user] = await registerAndLogin();
-    const item = await Todo.insert({
+    const todo = await Todo.insert({
       todo: 'wash car',
       complete: true,
       user_id: user.id,
     });
-    const resp = await agent.delete(`/api/v1/items/${item.id}`);
+    const resp = await agent.delete(`/api/v1/todos/${todo.id}`);
     expect(resp.status).toBe(200);
 
-    const check = await Todo.getById(item.id);
+    const check = await Todo.getById(todo.id);
     expect(check).toBeNull();
   });
 
