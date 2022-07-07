@@ -40,7 +40,7 @@ describe('todos', () => {
     expect(resp.status).toBe(200);
   });
 
-  it('UPDATE /api/v1/todos/:id should update a todo', async () => {
+  it('PUT /api/v1/todos/:id should update a todo', async () => {
     const [agent, user] = await registerAndLogin();
     const todo = await Todo.insert({
       todo: 'laundry',
@@ -76,4 +76,19 @@ describe('todos', () => {
     const resp = await request(app).get('/api/v1/todos');
     expect(resp.status).toEqual(401);
   });
+
+  it('DELETE /api/v1/items/:id should delete items for valid user', async () => {
+    const [agent, user] = await registerAndLogin();
+    const item = await Todo.insert({
+      todo: 'wash car',
+      complete: true,
+      user_id: user.id,
+    });
+    const resp = await agent.delete(`/api/v1/items/${item.id}`);
+    expect(resp.status).toBe(200);
+
+    const check = await Todo.getById(item.id);
+    expect(check).toBeNull();
+  });
+
 });
