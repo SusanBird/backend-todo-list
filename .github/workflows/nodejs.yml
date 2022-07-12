@@ -17,7 +17,7 @@ jobs:
       - run: npm test
         env:
           CI: true
-          DATABASE_URL: postgres://zfixxikjvlrinp:03e432445c9f927e31ec217e549b13de693c3d8dc685904a329484c6392ce608@ec2-34-233-115-14.compute-1.amazonaws.com:5432/d79d96h9m2mn8b
+          DATABASE_URL: postgres://alchemy:alchemy@postgres:5432/alchemy
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           SALT_ROUNDS: ${{ secrets.SALT_ROUNDS }}
           COOKIE_NAME: ${{ secrets.COOKIE_NAME }}
