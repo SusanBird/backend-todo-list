@@ -48,7 +48,7 @@ describe('todos', () => {
       user_id: user.id,
     });
     const resp = await agent
-      .put(`/api/v1/todos/${todo.id}`)
+      (`/api/v1/todos/${todo.id}`)
       .send({ complete: true });
     // expect(resp.status).toBe(200);
     expect(resp.body).toEqual({ ...todo, complete: true });
